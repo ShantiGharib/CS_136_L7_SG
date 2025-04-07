@@ -11,99 +11,99 @@
 
 class StudentRecord {
 
-	std::string studentId{"n/a"}, firstName{"n/a"}, lastName{"n/a"};
+    std::string studentId{"n/a"}, firstName{"n/a"}, lastName{"n/a"};
 
-	size_t unitsTaken{0};
-	
-	bool active{false}, initialized{false};
+    size_t unitsTaken{0};
+    
+    bool active{false}, initialized{false};
 
 public:
 
-	StudentRecord();
-	
-	StudentRecord(const std::string &newStudentId, const std::string &newFirstName, const std::string &newLastName, const size_t newUnitsTaken);
-	
-	void SetStudentInfo(const std::string &newStudentId, const std::string &newFirstName, const std::string &newLastName, const size_t newUnitsTaken);
+    StudentRecord();
+    
+    StudentRecord(const std::string &newStudentId, const std::string &newFirstName, const std::string &newLastName, const size_t newUnitsTaken);
+    
+    void SetStudentInfo(const std::string &newStudentId, const std::string &newFirstName, const std::string &newLastName, const size_t newUnitsTaken);
 
-	std::string ToString() const;
+    std::string ToString() const;
 
-	inline const std::string &GetStudentId() const;
-	inline const std::string &GetFirstName() const;
-	inline const std::string &GetLastName() const;
-	inline const size_t GetUnitsTaken() const;
-	inline void ArchiveRecord();
-	inline bool IsActive() const;
-	inline bool IsInitialized() const;
+    inline const std::string &GetStudentId() const;
+    inline const std::string &GetFirstName() const;
+    inline const std::string &GetLastName() const;
+    inline const size_t GetUnitsTaken() const;
+    inline void ArchiveRecord();
+    inline bool IsActive() const;
+    inline bool IsInitialized() const;
 
 };
 
 class HashTable {
-	
+    
 private:
 
-	static constexpr const int LIMIT{1000}, OVERFLOW_LIMIT{200}, ORDERS_OF_MAGNITUDE_MAX{3};
+    static constexpr const int LIMIT{1000}, OVERFLOW_LIMIT{200}, ORDERS_OF_MAGNITUDE_MAX{3};
 
-	StudentRecord* pHashTable{nullptr}, *pOverflowTable{nullptr};
-	int hashMaxSize{LIMIT}, overflowMaxSize{OVERFLOW_LIMIT}, 
-		hashUsedSize{0}, overflowUsedSize{0}, magnitudeOrder{0};
-	
-	bool unsavedRecords{false}, isInitialized{false};
-	
-	
-	bool IsTableBuilt() const;
-	
-	void LoadRecords();
+    StudentRecord* pHashTable{nullptr}, *pOverflowTable{nullptr};
+    int hashMaxSize{LIMIT}, overflowMaxSize{OVERFLOW_LIMIT}, 
+        hashUsedSize{0}, overflowUsedSize{0}, magnitudeOrder{0};
+    
+    bool unsavedRecords{false}, isInitialized{false};
+    
+    
+    bool IsTableBuilt() const;
+    
+    void LoadRecords();
 
-	void CopyFunction(const HashTable &source);
+    void CopyFunction(const HashTable &source);
 
-	bool AllocateMemory(StudentRecord* &pTable, const int size);
+    bool AllocateMemory(StudentRecord* &pTable, const int size);
 
-	void DeallocateMemory(StudentRecord* &pTable);
+    void DeallocateMemory(StudentRecord* &pTable);
 
-	std::string GetStuIdFromUser();
+    std::string GetStuIdFromUser();
 
-	int HashFunc(const std::string &stuId) const;
+    int HashFunc(const std::string &stuId) const;
 
-	StudentRecord* SearchRecord(const std::string &stuId);
+    StudentRecord* SearchRecord(const std::string &stuId);
 
 public:
 
-	HashTable();
+    HashTable();
 
-	HashTable(const HashTable &source);
+    HashTable(const HashTable &source);
 
-	void operator=(const HashTable &source);
+    void operator=(const HashTable &source);
 
-	~HashTable();
+    ~HashTable();
 
-	inline int GetHashSize() const;
-	inline int GetHashCapacity() const;
-	inline int GetOverflowSize() const;
-	inline int GetOverflowCapacity() const;
-	
-	void BuildHashTable();
+    inline int GetHashSize() const;
+    inline int GetHashCapacity() const;
+    inline int GetOverflowSize() const;
+    inline int GetOverflowCapacity() const;
+    
+    void BuildHashTable();
 
-	bool InsertElement(const std::string &record);
+    bool InsertElement(const std::string &record);
 
-	void SearchRecordHelper();
+    void SearchRecordHelper();
 
-	bool ArchiveRecord();
+    bool ArchiveRecord();
 
-	std::string PrintActiveRecords() const;
+    std::string PrintActiveRecords() const;
 
-	std::string PrintDeletedRecords() const;
+    std::string PrintDeletedRecords() const;
 
-	std::string PrintUnprocessedRecords() const;
+    std::string PrintUnprocessedRecords() const;
 
 };
 
 
 enum class MenuOptions {
 
-	BUILD_HASH_TABLE = 1, SEARCH_TABLE, ARCHIVE_RECORD, 
-	PRINT_ACTIVE_RECORDS, PRINT_DELETED_RECORDS, 
-	PRINT_UNPROCESSED_RECORDS,
-	QUIT,
+    BUILD_HASH_TABLE = 1, SEARCH_TABLE, ARCHIVE_RECORD, 
+    PRINT_ACTIVE_RECORDS, PRINT_DELETED_RECORDS, 
+    PRINT_UNPROCESSED_RECORDS,
+    QUIT,
 
 };
 
@@ -117,90 +117,90 @@ static const std::string ERROR_FILE{"err_unprocessed.txt"};
 
 
 int main() {
-	
+    
 
-	HashTable hash;
+    HashTable hash;
 
-	int option{0};
-	
-	while (option != static_cast<int>(MenuOptions::QUIT)) {
-	
-		DisplayMenu();
-		
-		std::cin >> option;
+    int option{0};
+    
+    while (option != static_cast<int>(MenuOptions::QUIT)) {
+    
+        DisplayMenu();
+        
+        std::cin >> option;
 
-		std::cout << "\n\n";
+        std::cout << "\n\n";
 
-		switch (option) {
+        switch (option) {
 
-			case static_cast<int>(MenuOptions::BUILD_HASH_TABLE): {
-				
-				hash.BuildHashTable();
+            case static_cast<int>(MenuOptions::BUILD_HASH_TABLE): {
+                
+                hash.BuildHashTable();
 
-				break;
-			}
+                break;
+            }
 
-			case static_cast<int>(MenuOptions::SEARCH_TABLE): {
-				
-				hash.SearchRecordHelper();
+            case static_cast<int>(MenuOptions::SEARCH_TABLE): {
+                
+                hash.SearchRecordHelper();
 
-				break;
-			}
+                break;
+            }
 
-			case static_cast<int>(MenuOptions::ARCHIVE_RECORD): {
-				
-				hash.ArchiveRecord();
-			
-				break;
-			
-			}
+            case static_cast<int>(MenuOptions::ARCHIVE_RECORD): {
+                
+                hash.ArchiveRecord();
+            
+                break;
+            
+            }
 
-			case static_cast<int>(MenuOptions::PRINT_ACTIVE_RECORDS): {
-				
-				std::cout << hash.PrintActiveRecords();
+            case static_cast<int>(MenuOptions::PRINT_ACTIVE_RECORDS): {
+                
+                std::cout << hash.PrintActiveRecords();
 
-				break;
-			
-			}
+                break;
+            
+            }
 
-			case static_cast<int>(MenuOptions::PRINT_DELETED_RECORDS): {
-		
-				std::cout << hash.PrintDeletedRecords();
+            case static_cast<int>(MenuOptions::PRINT_DELETED_RECORDS): {
+        
+                std::cout << hash.PrintDeletedRecords();
 
-				break;
+                break;
 
-			}
+            }
 
-			case static_cast<int>(MenuOptions::PRINT_UNPROCESSED_RECORDS): {
-		
-				std::cout << hash.PrintUnprocessedRecords();
+            case static_cast<int>(MenuOptions::PRINT_UNPROCESSED_RECORDS): {
+        
+                std::cout << hash.PrintUnprocessedRecords();
 
-				break;
+                break;
 
-			}
+            }
 
-			case static_cast<int>(MenuOptions::QUIT): {
-				
-				std::cout << "Program now closed\n\n";
-				
-				break;
-			}
+            case static_cast<int>(MenuOptions::QUIT): {
+                
+                std::cout << "Program now closed\n\n";
+                
+                break;
+            }
 
-			default: {
-			
-				HandleDefaultMenuCase();
-				
-				break;	
-			}
+            default: {
+            
+                HandleDefaultMenuCase();
+                
+                break;    
+            }
 
-		
-		}
+        
+        }
 
 
-	
-	
-	
-	}
+    
+    
+    
+    }
 
 
 
@@ -211,75 +211,75 @@ int main() {
 StudentRecord::StudentRecord() {}
 
 StudentRecord::StudentRecord(const std::string &newStudentId, const std::string &newFirstName, const std::string &newLastName, const size_t newUnitsTaken) {
-		
-		SetStudentInfo(newStudentId, newFirstName, newLastName, newUnitsTaken);
-	
-	}
+        
+        SetStudentInfo(newStudentId, newFirstName, newLastName, newUnitsTaken);
+    
+    }
 
 void StudentRecord::SetStudentInfo(const std::string &newStudentId, const std::string &newFirstName, const std::string &newLastName, const size_t newUnitsTaken) {
-	
-		
-		studentId = newStudentId;
+    
+        
+        studentId = newStudentId;
 
-		firstName = newFirstName;
+        firstName = newFirstName;
 
-		lastName = newLastName;
+        lastName = newLastName;
 
-		unitsTaken = newUnitsTaken;
+        unitsTaken = newUnitsTaken;
 
-		active = initialized = true;
-	
-	}
+        active = initialized = true;
+    
+    }
 
 std::string StudentRecord::ToString() const {
-	
-		std::ostringstream result;
+    
+        std::ostringstream result;
 
-		result << studentId << " " << firstName << " " << lastName << " " << unitsTaken << "\n";
+        result << studentId << " " << firstName << " " << lastName << " " << unitsTaken << "\n";
 
-		return result.str();
-	
-	}
+        return result.str();
+    
+    }
 
 inline const std::string& StudentRecord::GetStudentId() const { 
 
-	return studentId; 
+    return studentId; 
 
 }
 
 inline const std::string& StudentRecord::GetFirstName() const { 
 
-	return firstName;
+    return firstName;
 
 }
 
 inline const std::string& StudentRecord::GetLastName() const { 
 
-	return lastName;
+    return lastName;
 
 }
 
 inline const size_t StudentRecord::GetUnitsTaken() const { 
 
-	return unitsTaken; 
+    return unitsTaken; 
 
 }
 
 inline void StudentRecord::ArchiveRecord() { 
 
-	active = false; 
+    active = false; 
 
 }
 
-inline bool	StudentRecord::IsActive() const { 
+inline bool    StudentRecord::IsActive() const { 
 
-	return active; 
+    return active; 
 
 }
 
-inline bool	StudentRecord::IsInitialized() const { 
+inline bool    StudentRecord::IsInitialized() const { 
 
-	return initialized; 
+    return initialized; 
 
 }
 
@@ -292,496 +292,496 @@ HashTable::HashTable() {}
 
 void HashTable::CopyFunction(const HashTable &source) {
 
-	DeallocateMemory(pHashTable);
-	DeallocateMemory(pOverflowTable);
+    DeallocateMemory(pHashTable);
+    DeallocateMemory(pOverflowTable);
 
-	if (!AllocateMemory(pHashTable, source.hashMaxSize) || 
-		!AllocateMemory(pOverflowTable, source.overflowMaxSize)) {
-		
-		DeallocateMemory(pHashTable);
-		DeallocateMemory(pOverflowTable);
+    if (!AllocateMemory(pHashTable, source.hashMaxSize) || 
+        !AllocateMemory(pOverflowTable, source.overflowMaxSize)) {
+        
+        DeallocateMemory(pHashTable);
+        DeallocateMemory(pOverflowTable);
 
-		isInitialized = false;
+        isInitialized = false;
 
-		std::cout << "Please rebuild the hash table\n\n";
+        std::cout << "Please rebuild the hash table\n\n";
 
-	}
+    }
 
-	else {
-		
-		hashMaxSize = source.hashMaxSize;
-		overflowMaxSize = source.overflowMaxSize;
-		hashUsedSize = source.hashUsedSize;
-		overflowUsedSize = source.overflowUsedSize;
-		magnitudeOrder = source.magnitudeOrder;
-		unsavedRecords = source.unsavedRecords;
-		isInitialized = source.isInitialized;
+    else {
+        
+        hashMaxSize = source.hashMaxSize;
+        overflowMaxSize = source.overflowMaxSize;
+        hashUsedSize = source.hashUsedSize;
+        overflowUsedSize = source.overflowUsedSize;
+        magnitudeOrder = source.magnitudeOrder;
+        unsavedRecords = source.unsavedRecords;
+        isInitialized = source.isInitialized;
 
-		for (int i = 0; i < hashMaxSize; ++i) {
-		
-			pHashTable[i] = source.pHashTable[i];
-		
-		}
+        for (int i = 0; i < hashMaxSize; ++i) {
+        
+            pHashTable[i] = source.pHashTable[i];
+        
+        }
 
-		for (int i = 0; i < overflowUsedSize; ++i) {
-		
-			pOverflowTable[i] = source.pOverflowTable[i];
+        for (int i = 0; i < overflowUsedSize; ++i) {
+        
+            pOverflowTable[i] = source.pOverflowTable[i];
 
-		}
-	
-	}
+        }
+    
+    }
 
 }
 
 HashTable::HashTable(const HashTable &source) {
 
-	CopyFunction(source);	
+    CopyFunction(source);    
 
 }
 
 void HashTable::operator=(const HashTable &source) {
 
-	CopyFunction(source);
+    CopyFunction(source);
 
 }
 
 HashTable::~HashTable() {
 
-	DeallocateMemory(pHashTable);
-	DeallocateMemory(pOverflowTable);
-	
-	pHashTable = pOverflowTable = nullptr;
+    DeallocateMemory(pHashTable);
+    DeallocateMemory(pOverflowTable);
+    
+    pHashTable = pOverflowTable = nullptr;
 
 }
 
 inline int HashTable::GetHashSize() const { 
 
-	return hashUsedSize; 
+    return hashUsedSize; 
 
 }
 
 inline int HashTable::GetHashCapacity() const { 
 
-	return hashMaxSize; 
+    return hashMaxSize; 
 
 }
 
 inline int HashTable::GetOverflowSize() const { 
 
-	return overflowUsedSize; 
+    return overflowUsedSize; 
 
 }
 
 inline int HashTable::GetOverflowCapacity() const { 
 
-	return overflowMaxSize; 
+    return overflowMaxSize; 
 
 }
 
 bool HashTable::IsTableBuilt() const  {
-	
-	if (!isInitialized) {
-		
-		std::cout << "Before any other functionality may be used, the hash table must first be built.\nThis message will persist until the aforementioned condition is satisfied\n";
-		
-	}
+    
+    if (!isInitialized) {
+        
+        std::cout << "Before any other functionality may be used, the hash table must first be built.\nThis message will persist until the aforementioned condition is satisfied\n";
+        
+    }
 
-	return isInitialized;
-	
+    return isInitialized;
+    
 }
 
 void HashTable::LoadRecords() {
-	
-	std::ifstream inStream(INPUT_FILE);
-	std::ofstream errorStream(ERROR_FILE);
+    
+    std::ifstream inStream(INPUT_FILE);
+    std::ofstream errorStream(ERROR_FILE);
 
-	if (inStream.is_open()) {
-		
-		std::string record;
-			
-		while (std::getline(inStream, record)) {
-			
-			if (!InsertElement(record)) {
+    if (inStream.is_open()) {
+        
+        std::string record;
+            
+        while (std::getline(inStream, record)) {
+            
+            if (!InsertElement(record)) {
 
-				if (errorStream.is_open()) {
-				
-					errorStream << record << "\n";
-				
-				}
-
-
-				else {
-				
-					unsavedRecords = true;
-				
-				}
-
-			}
-			
-		}
-		
-		if (unsavedRecords) {
-				
-			std::cout << "The file used to store unprocessed records could not be accessed, rendering some records skipped\n";
-			
-		}
+                if (errorStream.is_open()) {
+                
+                    errorStream << record << "\n";
+                
+                }
 
 
-		inStream.close();
+                else {
+                
+                    unsavedRecords = true;
+                
+                }
 
-	}
+            }
+            
+        }
+        
+        if (unsavedRecords) {
+                
+            std::cout << "The file used to store unprocessed records could not be accessed, rendering some records skipped\n";
+            
+        }
 
-	else {
-		
-		std::cout << "Could not open input file to load records.\nProgram will close\n";
 
-		exit(EXIT_FAILURE);
-		
-	}
+        inStream.close();
+
+    }
+
+    else {
+        
+        std::cout << "Could not open input file to load records.\nProgram will close\n";
+
+        exit(EXIT_FAILURE);
+        
+    }
 
 }
 
 bool HashTable::AllocateMemory(StudentRecord* &pTable, const int size) {
-	
-	if (pTable == nullptr) {
+    
+    if (pTable == nullptr) {
 
-		try {
-	
-			pTable = new StudentRecord[size];
-	
-		}
+        try {
+    
+            pTable = new StudentRecord[size];
+    
+        }
 
-		catch (std::bad_alloc) {
-	
-			std::cout << "Could not allocate memory for the hash table\n"
-				"Please free up memory and try again\n";
-	
-		}
-	
-	}
+        catch (std::bad_alloc) {
+    
+            std::cout << "Could not allocate memory for the hash table\n"
+                "Please free up memory and try again\n";
+    
+        }
+    
+    }
 
-	else {
-	
-		std::cout << "Memory must be deleted first before reallocating\n\n";
-	
-	}
-	
+    else {
+    
+        std::cout << "Memory must be deleted first before reallocating\n\n";
+    
+    }
+    
 
-	return (pTable != nullptr);
+    return (pTable != nullptr);
 
 }
 
 void HashTable::DeallocateMemory(StudentRecord* &pTable) {
-	
-	if (pTable != nullptr) {
-	
-		delete[] pTable;
-	
-	}
+    
+    if (pTable != nullptr) {
+    
+        delete[] pTable;
+    
+    }
 
 }
 
 void HashTable::BuildHashTable() {
 
-	if (!isInitialized) {
-	
-		int orderOfMagntitude{0};
-	
-		while (orderOfMagntitude <= 0 || orderOfMagntitude > ORDERS_OF_MAGNITUDE_MAX) {
-	
-			std::cout << "Select the hash table's size\n1. 10\n2. 100\n3. 1000\n\n";
+    if (!isInitialized) {
+    
+        int orderOfMagntitude{0};
+    
+        while (orderOfMagntitude <= 0 || orderOfMagntitude > ORDERS_OF_MAGNITUDE_MAX) {
+    
+            std::cout << "Select the hash table's size\n1. 10\n2. 100\n3. 1000\n\n";
 
-			std::cin >> orderOfMagntitude;
+            std::cin >> orderOfMagntitude;
 
-			if (orderOfMagntitude >= 0 && orderOfMagntitude <= ORDERS_OF_MAGNITUDE_MAX) {
-		
-				magnitudeOrder = orderOfMagntitude;
+            if (orderOfMagntitude >= 0 && orderOfMagntitude <= ORDERS_OF_MAGNITUDE_MAX) {
+        
+                magnitudeOrder = orderOfMagntitude;
 
-			}
+            }
 
-			else {
-			
-				HandleDefaultMenuCase();
-		
-			}
-	
-		}
+            else {
+            
+                HandleDefaultMenuCase();
+        
+            }
+    
+        }
 
-		hashMaxSize = static_cast<int>(pow(10, magnitudeOrder));
-		overflowMaxSize = static_cast<int>(0.2 * hashMaxSize);
+        hashMaxSize = static_cast<int>(pow(10, magnitudeOrder));
+        overflowMaxSize = static_cast<int>(0.2 * hashMaxSize);
 
-		if (!AllocateMemory(pHashTable, hashMaxSize) || !AllocateMemory(pOverflowTable, overflowMaxSize)) {
-	
-			DeallocateMemory(pHashTable);
-			DeallocateMemory(pOverflowTable);
-	
-		}
+        if (!AllocateMemory(pHashTable, hashMaxSize) || !AllocateMemory(pOverflowTable, overflowMaxSize)) {
+    
+            DeallocateMemory(pHashTable);
+            DeallocateMemory(pOverflowTable);
+    
+        }
 
-		else {
-	
-			LoadRecords();
+        else {
+    
+            LoadRecords();
 
-			isInitialized = true;
-	
-		}
+            isInitialized = true;
+    
+        }
 
-	
-	}
+    
+    }
 
-	else {
-	
-		std::cout << "Hash Table is already built. No need to rebuild it\n\n";
-	
-	}
-	
+    else {
+    
+        std::cout << "Hash Table is already built. No need to rebuild it\n\n";
+    
+    }
+    
 }
 
 int HashTable::HashFunc(const std::string &stuId) const {
-	
-		//1, 2, |3, 4, 5,| 6, 7, 8, 9
-		int sumL{0};
+    
+        //1, 2, |3, 4, 5,| 6, 7, 8, 9
+        int sumL{0};
 
-		for (int i = 4, magnitude = 1; i >= 2; --i, magnitude *= 10) {
-			
-			sumL += (stuId[i] - '0') * magnitude;
-			
-		}
+        for (int i = 4, magnitude = 1; i >= 2; --i, magnitude *= 10) {
+            
+            sumL += (stuId[i] - '0') * magnitude;
+            
+        }
 
-		int sumR{0};
+        int sumR{0};
 
-		for (int i = 8, magnitude = 1; i >= 5; --i, magnitude *= 10) {
-			
-			sumR += (stuId[i] - '0') * magnitude;
+        for (int i = 8, magnitude = 1; i >= 5; --i, magnitude *= 10) {
+            
+            sumR += (stuId[i] - '0') * magnitude;
 
-		}
+        }
 
-		const int SUM = sumL + sumR;
-			
-		std::string midSquaredStr;
-		
-		{		
-			int midSquared = SUM * SUM;
+        const int SUM = sumL + sumR;
+            
+        std::string midSquaredStr;
+        
+        {        
+            int midSquared = SUM * SUM;
 
-			while (midSquared != 0) {
-			
-				midSquaredStr.push_back('0' + (midSquared % 10));
-				midSquared/= 10;
-			
-			}
-		}
+            while (midSquared != 0) {
+            
+                midSquaredStr.push_back('0' + (midSquared % 10));
+                midSquared/= 10;
+            
+            }
+        }
 
-		int mid = midSquaredStr.size() / 2;
-		int idx = 0;
-		for (int i = mid, magnitude = 1; mid - i < magnitudeOrder; --i, magnitude *= 10) {
-			
-			idx += (midSquaredStr[i] - '0') * magnitude;
+        int mid = midSquaredStr.size() / 2;
+        int idx = 0;
+        for (int i = mid, magnitude = 1; mid - i < magnitudeOrder; --i, magnitude *= 10) {
+            
+            idx += (midSquaredStr[i] - '0') * magnitude;
 
-		}
+        }
 
-		return idx;
+        return idx;
 
 }
 
 StudentRecord* HashTable::SearchRecord(const std::string &stuId) {
-	
-	const int hashIndex = HashFunc(stuId);
+    
+    const int hashIndex = HashFunc(stuId);
 
-	StudentRecord* foundMatch{nullptr};
+    StudentRecord* foundMatch{nullptr};
 
-	if (pHashTable[hashIndex].IsActive() && pHashTable[hashIndex].GetStudentId() == stuId) {
-			
-		foundMatch = &pHashTable[hashIndex];
+    if (pHashTable[hashIndex].IsActive() && pHashTable[hashIndex].GetStudentId() == stuId) {
+            
+        foundMatch = &pHashTable[hashIndex];
 
-	}
+    }
 
-	for (int i = 0; !foundMatch && i < overflowUsedSize; ++i) {
-			
-		if (pOverflowTable[i].IsActive() && pOverflowTable[i].GetStudentId() == stuId) {
-					
-			foundMatch = &pOverflowTable[i];
-				
-		}
-			
-	}
+    for (int i = 0; !foundMatch && i < overflowUsedSize; ++i) {
+            
+        if (pOverflowTable[i].IsActive() && pOverflowTable[i].GetStudentId() == stuId) {
+                    
+            foundMatch = &pOverflowTable[i];
+                
+        }
+            
+    }
 
-	return foundMatch;
-	
+    return foundMatch;
+    
 }
 
 std::string HashTable::GetStuIdFromUser() {
-	
-	std::string stuId;
-		
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    
+    std::string stuId;
+        
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-	std::cout << "\nEnter Student Id: \n";
-	std::getline(std::cin, stuId);
+    std::cout << "\nEnter Student Id: \n";
+    std::getline(std::cin, stuId);
 
-	return stuId;
-	
+    return stuId;
+    
 }
 
 bool HashTable::InsertElement(const std::string &record) {
-	
-		
-		std::istringstream recordStream(record);
+    
+        
+        std::istringstream recordStream(record);
 
-		std::string id, firstName, lastName;
+        std::string id, firstName, lastName;
 
-		size_t unitsTaken{0};
+        size_t unitsTaken{0};
 
-		recordStream >> id >> firstName >> lastName >> unitsTaken;
+        recordStream >> id >> firstName >> lastName >> unitsTaken;
 
-		int hashIndex = HashFunc(id);
+        int hashIndex = HashFunc(id);
 
-		bool inserted{true};
+        bool inserted{true};
 
-		if (!pHashTable[hashIndex].IsActive()) {
-				
-			pHashTable[hashIndex] = StudentRecord(id, firstName, lastName, unitsTaken);
+        if (!pHashTable[hashIndex].IsActive()) {
+                
+            pHashTable[hashIndex] = StudentRecord(id, firstName, lastName, unitsTaken);
 
-			++hashUsedSize;
-				
-		}
+            ++hashUsedSize;
+                
+        }
 
-		else if (overflowUsedSize < overflowMaxSize) {
+        else if (overflowUsedSize < overflowMaxSize) {
 
-			pOverflowTable[overflowUsedSize] = StudentRecord(id, firstName, lastName, unitsTaken);
+            pOverflowTable[overflowUsedSize] = StudentRecord(id, firstName, lastName, unitsTaken);
 
-			++overflowUsedSize;
+            ++overflowUsedSize;
 
-		}
+        }
 
-		else {
-		
-			inserted = false;
-		
-		}
+        else {
+        
+            inserted = false;
+        
+        }
 
-		return inserted;
-	
-	}
+        return inserted;
+    
+    }
 
 void HashTable::SearchRecordHelper() {
-			
-			if (IsTableBuilt()) {
-				
-				const std::string stuId = GetStuIdFromUser();
+            
+            if (IsTableBuilt()) {
+                
+                const std::string stuId = GetStuIdFromUser();
 
-				StudentRecord* record = SearchRecord(stuId);
+                StudentRecord* record = SearchRecord(stuId);
 
-				if (record == nullptr) {
-			
-					std::cout << "Record could not be found\n";
-			
-				}
-			
-				else {
-				
-					const int MEMORY_GAP =  record - pHashTable;
-					std::cout << "Location: " << ((0 <= MEMORY_GAP && MEMORY_GAP < LIMIT) ? "Hash" : "Overflow") << " Table\n" << record->ToString();
-			
-				}
-			
-			}
-	
-	}
+                if (record == nullptr) {
+            
+                    std::cout << "Record could not be found\n";
+            
+                }
+            
+                else {
+                
+                    const int MEMORY_GAP =  record - pHashTable;
+                    std::cout << "Location: " << ((0 <= MEMORY_GAP && MEMORY_GAP < LIMIT) ? "Hash" : "Overflow") << " Table\n" << record->ToString();
+            
+                }
+            
+            }
+    
+    }
 
 bool HashTable::ArchiveRecord() {
-	
-		StudentRecord* foundMatch = nullptr;
+    
+        StudentRecord* foundMatch = nullptr;
 
-		if (IsTableBuilt()) {
-		
-			const std::string stuId = GetStuIdFromUser();
+        if (IsTableBuilt()) {
+        
+            const std::string stuId = GetStuIdFromUser();
 
-			foundMatch = SearchRecord(stuId);
+            foundMatch = SearchRecord(stuId);
 
-			if (foundMatch) {
-		
-				foundMatch->ArchiveRecord();
-		
-		
-			}
-		
-		}
+            if (foundMatch) {
+        
+                foundMatch->ArchiveRecord();
+        
+        
+            }
+        
+        }
 
-		return (foundMatch != nullptr);
+        return (foundMatch != nullptr);
 
-	}
+    }
 
 std::string HashTable::PrintActiveRecords() const {
-	
-		std::ostringstream result;
+    
+        std::ostringstream result;
 
-		if (IsTableBuilt()) {
-		
-			for (int i = 0; i < hashMaxSize; ++i) {
-		
-				if (pHashTable[i].IsActive()) {
-			
-					result << pHashTable[i].ToString();
-			
-				}
-		
-			}
-		
-		}
+        if (IsTableBuilt()) {
+        
+            for (int i = 0; i < hashMaxSize; ++i) {
+        
+                if (pHashTable[i].IsActive()) {
+            
+                    result << pHashTable[i].ToString();
+            
+                }
+        
+            }
+        
+        }
 
-		return result.str();
+        return result.str();
 
-	}
+    }
 
 std::string HashTable::PrintDeletedRecords() const {
-	
-		std::ostringstream result;
+    
+        std::ostringstream result;
 
-		if (IsTableBuilt()) {
-		
-			for (int i = 0; i < hashMaxSize; ++i) {
-		
-				if (pHashTable[i].IsInitialized() && !pHashTable[i].IsActive()) {
-			
-					result << pHashTable[i].ToString();
-			
-				}
-		
-			}
-		
-		}
+        if (IsTableBuilt()) {
+        
+            for (int i = 0; i < hashMaxSize; ++i) {
+        
+                if (pHashTable[i].IsInitialized() && !pHashTable[i].IsActive()) {
+            
+                    result << pHashTable[i].ToString();
+            
+                }
+        
+            }
+        
+        }
 
 
-		return result.str();
+        return result.str();
 
-	}
+    }
 
 std::string HashTable::PrintUnprocessedRecords() const {
-	
-		std::ostringstream result;
+    
+        std::ostringstream result;
 
-		if (IsTableBuilt() && !unsavedRecords) {
-		
-			std::ifstream errorStream(ERROR_FILE);
-			
-			if (errorStream.is_open()) {
-				
-				std::string record;
+        if (IsTableBuilt() && !unsavedRecords) {
+        
+            std::ifstream errorStream(ERROR_FILE);
+            
+            if (errorStream.is_open()) {
+                
+                std::string record;
 
-				while (std::getline(errorStream, record)) {
-				
-					result << record << "\n";
-				
-				}
+                while (std::getline(errorStream, record)) {
+                
+                    result << record << "\n";
+                
+                }
 
-				errorStream.close();
-			
-			}
-		
-		}
+                errorStream.close();
+            
+            }
+        
+        }
 
-		return result.str();
-	
-	}
+        return result.str();
+    
+    }
 
 
 
@@ -789,15 +789,15 @@ std::string HashTable::PrintUnprocessedRecords() const {
 
 void DisplayMenu() {
 
-	std::cout << "\nSelect Option"
-		"\n1. Create Hash"
-		"\n2. Search Record by ID"
-		"\n3. Archive record"
-		"\n4. Print active records"
-		"\n5. Print deleted records"
-		"\n6. Print unprocessed records"
-		"\n7. Quit"
-		"\n\n";
+    std::cout << "\nSelect Option"
+        "\n1. Create Hash"
+        "\n2. Search Record by ID"
+        "\n3. Archive record"
+        "\n4. Print active records"
+        "\n5. Print deleted records"
+        "\n6. Print unprocessed records"
+        "\n7. Quit"
+        "\n\n";
 
 }
 

@@ -538,6 +538,7 @@ void HashTable::BuildHashTable() {
 
 int HashTable::HashFunc(const std::string &stuId) const {
     
+        //1, 2, |3, 4, 5,| 6, 7, 8, 9
         int sumL{0};
 
         for (int i = 4, magnitude = 1; i >= 2; --i, magnitude *= 10) {
@@ -813,354 +814,357 @@ void HandleDefaultMenuCase() {
 
 
 
+
+//TestCases:
+// 
+//TestCase1: Using other features without first creating hash table
 //Output
-
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//2
-//
-//
-//Before any other functionality may be used, the hash table must first be built.
-//This message will persist until the aforementioned condition is satisfied
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//3
-//
-//
-//Before any other functionality may be used, the hash table must first be built.
-//This message will persist until the aforementioned condition is satisfied
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//4
-//
-//
-//Before any other functionality may be used, the hash table must first be built.
-//This message will persist until the aforementioned condition is satisfied
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//5
-//
-//
-//Before any other functionality may be used, the hash table must first be built.
-//This message will persist until the aforementioned condition is satisfied
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//6
-//
-//
-//Before any other functionality may be used, the hash table must first be built.
-//This message will persist until the aforementioned condition is satisfied
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//7
-//
-//
-//Program now closed
-
-
-
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//1
-//
-//
-//Select the hash table's size
-//1. 10
-//2. 100
-//3. 1000
-//
-//2
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//3
-//
-//
-//
-//Enter Student Id:
-//881234590
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//6
-//
-//
-//881234658 Mary Marcos 25
-//881234659 Mary Marcos 25
-//881234660 Mary Marcos 25
-//881234661 Mary Marcos 25
-//881234662 Mary Marcos 25
-//881234663 Mary Marcos 25
-//881234664 Mary Marcos 25
-//881234665 Mary Marcos 25
-//881234666 Mary Marcos 25
-//881234667 Mary Marcos 25
-//881234668 Mary Marcos 25
-//881234669 Mary Marcos 25
-//881234670 Mary Marcos 25
-//881234671 Mary Marcos 25
-//881234673 Mary Marcos 25
-//881234675 Mary Marcos 25
-//881234677 Mary Marcos 25
-//881234679 Mary Marcos 25
-//881234680 Mary Marcos 25
-//881234681 Mary Marcos 25
-//881234683 Mary Marcos 25
-//881234685 Mary Marcos 25
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//5
-//
-//
-//881234590 Mary Marcos 25
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//4
-//
-//
-//881234631 Mary Marcos 25
-//881234611 Mary Marcos 25
-//881234612 Mary Marcos 25
-//881234676 Mary Marcos 25
-//881234593 Mary Marcos 25
-//881234594 Mary Marcos 25
-//881234610 Mary Marcos 25
-//881234674 Mary Marcos 25
-//881234591 Mary Marcos 25
-//881234592 Mary Marcos 25
-//881234649 Mary Marcos 25
-//881234629 Mary Marcos 25
-//881234609 Mary Marcos 25
-//881234647 Mary Marcos 25
-//881234627 Mary Marcos 25
-//881234607 Mary Marcos 25
-//881234608 Mary Marcos 25
-//881234672 Mary Marcos 25
-//881234645 Mary Marcos 25
-//881234625 Mary Marcos 25
-//881234605 Mary Marcos 25
-//881234606 Mary Marcos 25
-//881234643 Mary Marcos 25
-//881234623 Mary Marcos 25
-//881234624 Mary Marcos 25
-//881234604 Mary Marcos 25
-//881234621 Mary Marcos 25
-//881234622 Mary Marcos 25
-//881234602 Mary Marcos 25
-//881234603 Mary Marcos 25
-//881234688 Mary Marcos 25
-//881234689 Mary Marcos 25
-//881234641 Mary Marcos 25
-//881234600 Mary Marcos 25
-//881234601 Mary Marcos 25
-//881234686 Mary Marcos 25
-//881234687 Mary Marcos 25
-//881234639 Mary Marcos 25
-//881234619 Mary Marcos 25
-//881234620 Mary Marcos 25
-//881234684 Mary Marcos 25
-//881234637 Mary Marcos 25
-//881234617 Mary Marcos 25
-//881234618 Mary Marcos 25
-//881234598 Mary Marcos 25
-//881234599 Mary Marcos 25
-//881234635 Mary Marcos 25
-//881234615 Mary Marcos 25
-//881234616 Mary Marcos 25
-//881234596 Mary Marcos 25
-//881234597 Mary Marcos 25
-//881234682 Mary Marcos 25
-//881234633 Mary Marcos 25
-//881234613 Mary Marcos 25
-//881234614 Mary Marcos 25
-//881234678 Mary Marcos 25
-//881234595 Mary Marcos 25
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//2
-//
-//
-//
-//Enter Student Id:
-//881234590
-//Record could not be found
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//1
-//
-//
-//Select the hash table's size
-//1. 10
-//2. 100
-//3. 1000
-//
-//1
-//Memory must be deleted first before reallocating
-//
-//Memory must be deleted first before reallocating
-//
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//7
-//
-//
-//Program now closed
-//
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  2
+//  
+//  
+//  Before any other functionality may be used, the hash table must first be built.
+//  This message will persist until the aforementioned condition is satisfied
+//  
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  3
+//  
+//  
+//  Before any other functionality may be used, the hash table must first be built.
+//  This message will persist until the aforementioned condition is satisfied
+//  
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  4
+//  
+//  
+//  Before any other functionality may be used, the hash table must first be built.
+//  This message will persist until the aforementioned condition is satisfied
+//  
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  5
+//  
+//  
+//  Before any other functionality may be used, the hash table must first be built.
+//  This message will persist until the aforementioned condition is satisfied
+//  
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  6
+//  
+//  
+//  Before any other functionality may be used, the hash table must first be built.
+//  This message will persist until the aforementioned condition is satisfied
+//  
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  7
+//  
+//  
+//  Program now closed
+    
+    
+//TestCase2: Creating HashTable
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  1
+//  
+//  
+//  Select the hash table's size
+//  1. 10
+//  2. 100
+//  3. 1000
+//  
+//  2
 
 
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//1
-//
-//
-//Select the hash table's size
-//1. 10
-//2. 100
-//3. 1000
-//
-//2
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//1
-//
-//
-//Hash Table is already built. No need to rebuild it
-//
-//
-//Select Option
-//1. Create Hash
-//2. Search Record by ID
-//3. Archive record
-//4. Print active records
-//5. Print deleted records
-//6. Print unprocessed records
-//7. Quit
-//
-//7
-//
-//
-//Program now closed
+
+//TestCase3: Archiving existing record
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  3
+//  
+//  Enter Student Id:
+//  881234590
+
+
+//TestCase4: Print unprocessed records
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  6
+//  
+//  
+//  881234658 Mary Marcos 25
+//  881234659 Mary Marcos 25
+//  881234660 Mary Marcos 25
+//  881234661 Mary Marcos 25
+//  881234662 Mary Marcos 25
+//  881234663 Mary Marcos 25
+//  881234664 Mary Marcos 25
+//  881234665 Mary Marcos 25
+//  881234666 Mary Marcos 25
+//  881234667 Mary Marcos 25
+//  881234668 Mary Marcos 25
+//  881234669 Mary Marcos 25
+//  881234670 Mary Marcos 25
+//  881234671 Mary Marcos 25
+//  881234673 Mary Marcos 25
+//  881234675 Mary Marcos 25
+//  881234677 Mary Marcos 25
+//  881234679 Mary Marcos 25
+//  881234680 Mary Marcos 25
+//  881234681 Mary Marcos 25
+//  881234683 Mary Marcos 25
+//  881234685 Mary Marcos 25
+
+
+//TestCase5: Print Deleted Records
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  5
+//  
+//  
+//  881234590 Mary Marcos 25
+
+
+//TestCase6: Print Active Records
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  4
+//  
+//  
+//  881234631 Mary Marcos 25
+//  881234611 Mary Marcos 25
+//  881234612 Mary Marcos 25
+//  881234676 Mary Marcos 25
+//  881234593 Mary Marcos 25
+//  881234594 Mary Marcos 25
+//  881234610 Mary Marcos 25
+//  881234674 Mary Marcos 25
+//  881234591 Mary Marcos 25
+//  881234592 Mary Marcos 25
+//  881234649 Mary Marcos 25
+//  881234629 Mary Marcos 25
+//  881234609 Mary Marcos 25
+//  881234647 Mary Marcos 25
+//  881234627 Mary Marcos 25
+//  881234607 Mary Marcos 25
+//  881234608 Mary Marcos 25
+//  881234672 Mary Marcos 25
+//  881234645 Mary Marcos 25
+//  881234625 Mary Marcos 25
+//  881234605 Mary Marcos 25
+//  881234606 Mary Marcos 25
+//  881234643 Mary Marcos 25
+//  881234623 Mary Marcos 25
+//  881234624 Mary Marcos 25
+//  881234604 Mary Marcos 25
+//  881234621 Mary Marcos 25
+//  881234622 Mary Marcos 25
+//  881234602 Mary Marcos 25
+//  881234603 Mary Marcos 25
+//  881234688 Mary Marcos 25
+//  881234689 Mary Marcos 25
+//  881234641 Mary Marcos 25
+//  881234600 Mary Marcos 25
+//  881234601 Mary Marcos 25
+//  881234686 Mary Marcos 25
+//  881234687 Mary Marcos 25
+//  881234639 Mary Marcos 25
+//  881234619 Mary Marcos 25
+//  881234620 Mary Marcos 25
+//  881234684 Mary Marcos 25
+//  881234637 Mary Marcos 25
+//  881234617 Mary Marcos 25
+//  881234618 Mary Marcos 25
+//  881234598 Mary Marcos 25
+//  881234599 Mary Marcos 25
+//  881234635 Mary Marcos 25
+//  881234615 Mary Marcos 25
+//  881234616 Mary Marcos 25
+//  881234596 Mary Marcos 25
+//  881234597 Mary Marcos 25
+//  881234682 Mary Marcos 25
+//  881234633 Mary Marcos 25
+//  881234613 Mary Marcos 25
+//  881234614 Mary Marcos 25
+//  881234678 Mary Marcos 25
+//  881234595 Mary Marcos 25
+
+
+
+//TestCase7: Search Record by ID: Deleted\non-existing record
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  2
+//  
+//  
+//  
+//  Enter Student Id:
+//  881234590
+//  Record could not be found
+
+
+
+//TestCase8: Search Record by ID: existing/active record
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  2
+//  
+//  
+//  
+//  Enter Student Id:
+//  881234590
+//  Location: Hash Table
+//  881234590 Mary Marcos 25
+
+
+
+
+//TestCase9: Trying to Recreate HashTable
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  1
+//  
+//  
+//  Hash Table is already built. No need to rebuild it
+//  
+
+
+
+
+//TestCase10: Quit
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  7
+//  
+//  
+//  Program now closed
+// 

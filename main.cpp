@@ -271,13 +271,13 @@ inline void StudentRecord::ArchiveRecord() {
 
 }
 
-inline bool    StudentRecord::IsActive() const { 
+inline bool StudentRecord::IsActive() const { 
 
     return active; 
 
 }
 
-inline bool    StudentRecord::IsInitialized() const { 
+inline bool StudentRecord::IsInitialized() const { 
 
     return initialized; 
 
@@ -538,7 +538,12 @@ void HashTable::BuildHashTable() {
 
 int HashTable::HashFunc(const std::string &stuId) const {
     
-        //1, 2, |3, 4, 5,| 6, 7, 8, 9
+    static constexpr const int ID_SIZE{9};
+
+    int idx{0};
+
+    if (stuId.size() == ID_SIZE) {
+        
         int sumL{0};
 
         for (int i = 4, magnitude = 1; i >= 2; --i, magnitude *= 10) {
@@ -571,14 +576,16 @@ int HashTable::HashFunc(const std::string &stuId) const {
         }
 
         int mid = midSquaredStr.size() / 2;
-        int idx = 0;
+
         for (int i = mid, magnitude = 1; mid - i < magnitudeOrder; --i, magnitude *= 10) {
             
             idx += (midSquaredStr[i] - '0') * magnitude;
 
         }
 
-        return idx;
+    }
+
+    return idx;
 
 }
 
@@ -1151,7 +1158,49 @@ void HandleDefaultMenuCase() {
 
 
 
-//TestCase10: Quit
+//TestCase10: Searching Record with an invalid key
+//Output:
+// 
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  1
+//  
+//  
+//  Select the hash table's size
+//  1. 10
+//  2. 100
+//  3. 1000
+//  
+//  2
+//  
+//  Select Option
+//  1. Create Hash
+//  2. Search Record by ID
+//  3. Archive record
+//  4. Print active records
+//  5. Print deleted records
+//  6. Print unprocessed records
+//  7. Quit
+//  
+//  2
+//  
+//  
+//  
+//  Enter Student Id:
+//   
+//  Record could not be found
+
+
+
+
+//TestCase11: Quit
 //Output:
 // 
 //  Select Option

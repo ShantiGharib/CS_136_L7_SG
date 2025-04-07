@@ -538,7 +538,6 @@ void HashTable::BuildHashTable() {
 
 int HashTable::HashFunc(const std::string &stuId) const {
     
-        //1, 2, |3, 4, 5,| 6, 7, 8, 9
         int sumL{0};
 
         for (int i = 4, magnitude = 1; i >= 2; --i, magnitude *= 10) {

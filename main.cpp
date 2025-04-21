@@ -13,9 +13,9 @@ class StudentRecord {
 
     std::string studentId{"n/a"}, firstName{"n/a"}, lastName{"n/a"};
 
-    size_t unitsTaken{0};
+    unsigned long long unitsTaken{0};
     
-    bool active{false}, initialized{false};
+    bool active{false}, notDefault{false};
 
 public:
 
@@ -30,10 +30,10 @@ public:
     inline const std::string &GetStudentId() const;
     inline const std::string &GetFirstName() const;
     inline const std::string &GetLastName() const;
-    inline const size_t GetUnitsTaken() const;
+    inline const unsigned long long GetUnitsTaken() const;
     inline void ArchiveRecord();
     inline bool IsActive() const;
-    inline bool IsInitialized() const;
+    inline bool IsNotDefault() const;
 
 };
 
@@ -41,13 +41,21 @@ class HashTable {
     
 private:
 
-    static constexpr const int LIMIT{1000}, OVERFLOW_LIMIT{200}, ORDERS_OF_MAGNITUDE_MAX{3};
+    static constexpr const int LIMIT{1000}, 
+        OVERFLOW_LIMIT{200}, 
+        ORDERS_OF_MAGNITUDE_MAX{3};
 
-    StudentRecord* pHashTable{nullptr}, *pOverflowTable{nullptr};
-    int hashMaxSize{LIMIT}, overflowMaxSize{OVERFLOW_LIMIT}, 
-        hashUsedSize{0}, overflowUsedSize{0}, magnitudeOrder{0};
+    StudentRecord *pHashTable{nullptr}, 
+        *pOverflowTable{nullptr};
     
-    bool unsavedRecords{false}, isInitialized{false};
+    int hashMaxSize{LIMIT}, 
+        overflowMaxSize{OVERFLOW_LIMIT}, 
+        hashUsedSize{0}, 
+        overflowUsedSize{0}, 
+        magnitudeOrder{0};
+    
+    bool unsavedRecords{false}, 
+        isBuilt{false};
     
     
     bool IsTableBuilt() const;
@@ -55,6 +63,7 @@ private:
     void LoadRecords();
 
     void CopyFunction(const HashTable &source);
+    void CopyFunctionHelper(StudentRecord* destinationTable, StudentRecord sourceTable[], const size_t size);
 
     bool AllocateMemory(StudentRecord* &pTable, const int size);
 
@@ -64,7 +73,7 @@ private:
 
     int HashFunc(const std::string &stuId) const;
 
-    StudentRecord* SearchRecord(const std::string &stuId);
+    StudentRecord* SearchRecordHelper(const std::string &stuId);
 
 public:
 
@@ -85,15 +94,15 @@ public:
 
     bool InsertElement(const std::string &record);
 
-    void SearchRecordHelper();
+    void SearchRecord();
 
     bool ArchiveRecord();
 
-    std::string PrintActiveRecords() const;
+    std::string GetActiveRecords() const;
 
-    std::string PrintDeletedRecords() const;
+    std::string GetDeletedRecords() const;
 
-    std::string PrintUnprocessedRecords() const;
+    std::string RetrieveUnprocessedRecords() const;
 
 };
 
@@ -109,6 +118,7 @@ enum class MenuOptions {
 
 
 void DisplayMenu();
+
 void HandleDefaultMenuCase();
 
 
@@ -142,7 +152,7 @@ int main() {
 
             case static_cast<int>(MenuOptions::SEARCH_TABLE): {
                 
-                hash.SearchRecordHelper();
+                hash.SearchRecord();
 
                 break;
             }
@@ -157,7 +167,7 @@ int main() {
 
             case static_cast<int>(MenuOptions::PRINT_ACTIVE_RECORDS): {
                 
-                std::cout << hash.PrintActiveRecords();
+                std::cout << hash.GetActiveRecords();
 
                 break;
             
@@ -165,7 +175,7 @@ int main() {
 
             case static_cast<int>(MenuOptions::PRINT_DELETED_RECORDS): {
         
-                std::cout << hash.PrintDeletedRecords();
+                std::cout << hash.GetDeletedRecords();
 
                 break;
 
@@ -173,7 +183,7 @@ int main() {
 
             case static_cast<int>(MenuOptions::PRINT_UNPROCESSED_RECORDS): {
         
-                std::cout << hash.PrintUnprocessedRecords();
+                std::cout << hash.RetrieveUnprocessedRecords();
 
                 break;
 
@@ -212,34 +222,34 @@ StudentRecord::StudentRecord() {}
 
 StudentRecord::StudentRecord(const std::string &newStudentId, const std::string &newFirstName, const std::string &newLastName, const size_t newUnitsTaken) {
         
-        SetStudentInfo(newStudentId, newFirstName, newLastName, newUnitsTaken);
+    SetStudentInfo(newStudentId, newFirstName, newLastName, newUnitsTaken);
     
-    }
+}
 
 void StudentRecord::SetStudentInfo(const std::string &newStudentId, const std::string &newFirstName, const std::string &newLastName, const size_t newUnitsTaken) {
     
         
-        studentId = newStudentId;
+    studentId = newStudentId;
 
-        firstName = newFirstName;
+    firstName = newFirstName;
 
-        lastName = newLastName;
+    lastName = newLastName;
 
-        unitsTaken = newUnitsTaken;
+    unitsTaken = newUnitsTaken;
 
-        active = initialized = true;
+    active = notDefault = true;
     
-    }
+}
 
 std::string StudentRecord::ToString() const {
     
-        std::ostringstream result;
+    std::ostringstream result;
 
-        result << studentId << " " << firstName << " " << lastName << " " << unitsTaken << "\n";
+    result << studentId << " " << firstName << " " << lastName << " " << unitsTaken << "\n";
 
-        return result.str();
+    return result.str();
     
-    }
+}
 
 inline const std::string& StudentRecord::GetStudentId() const { 
 
@@ -259,7 +269,7 @@ inline const std::string& StudentRecord::GetLastName() const {
 
 }
 
-inline const size_t StudentRecord::GetUnitsTaken() const { 
+inline const unsigned long long StudentRecord::GetUnitsTaken() const { 
 
     return unitsTaken; 
 
@@ -277,9 +287,9 @@ inline bool StudentRecord::IsActive() const {
 
 }
 
-inline bool StudentRecord::IsInitialized() const { 
+inline bool StudentRecord::IsNotDefault() const { 
 
-    return initialized; 
+    return notDefault; 
 
 }
 
@@ -301,7 +311,7 @@ void HashTable::CopyFunction(const HashTable &source) {
         DeallocateMemory(pHashTable);
         DeallocateMemory(pOverflowTable);
 
-        isInitialized = false;
+        isBuilt = false;
 
         std::cout << "Please rebuild the hash table\n\n";
 
@@ -315,19 +325,20 @@ void HashTable::CopyFunction(const HashTable &source) {
         overflowUsedSize = source.overflowUsedSize;
         magnitudeOrder = source.magnitudeOrder;
         unsavedRecords = source.unsavedRecords;
-        isInitialized = source.isInitialized;
+        isBuilt = source.isBuilt;
 
-        for (int i = 0; i < hashMaxSize; ++i) {
-        
-            pHashTable[i] = source.pHashTable[i];
-        
-        }
+        CopyFunctionHelper(pHashTable, source.pHashTable, hashUsedSize);
+        CopyFunctionHelper(pOverflowTable, source.pOverflowTable, overflowUsedSize);
+    
+    }
 
-        for (int i = 0; i < overflowUsedSize; ++i) {
-        
-            pOverflowTable[i] = source.pOverflowTable[i];
+}
 
-        }
+void HashTable::CopyFunctionHelper(StudentRecord* destinationTable, StudentRecord sourceTable[], const size_t size) {
+    
+    for (int i = 0; i < size; ++i) {
+    
+        destinationTable[i] = sourceTable[i];
     
     }
 
@@ -380,13 +391,13 @@ inline int HashTable::GetOverflowCapacity() const {
 
 bool HashTable::IsTableBuilt() const  {
     
-    if (!isInitialized) {
+    if (!isBuilt) {
         
         std::cout << "Before any other functionality may be used, the hash table must first be built.\nThis message will persist until the aforementioned condition is satisfied\n";
         
     }
 
-    return isInitialized;
+    return isBuilt;
     
 }
 
@@ -483,9 +494,10 @@ void HashTable::DeallocateMemory(StudentRecord* &pTable) {
 
 void HashTable::BuildHashTable() {
 
-    if (!isInitialized) {
+    if (!isBuilt) {
     
         int orderOfMagntitude{0};
+        int options[ORDERS_OF_MAGNITUDE_MAX];
     
         while (orderOfMagntitude <= 0 || orderOfMagntitude > ORDERS_OF_MAGNITUDE_MAX) {
     
@@ -521,7 +533,7 @@ void HashTable::BuildHashTable() {
     
             LoadRecords();
 
-            isInitialized = true;
+            isBuilt = true;
     
         }
 
@@ -589,7 +601,7 @@ int HashTable::HashFunc(const std::string &stuId) const {
 
 }
 
-StudentRecord* HashTable::SearchRecord(const std::string &stuId) {
+StudentRecord* HashTable::SearchRecordHelper(const std::string &stuId) {
     
     const int hashIndex = HashFunc(stuId);
 
@@ -669,13 +681,13 @@ bool HashTable::InsertElement(const std::string &record) {
     
     }
 
-void HashTable::SearchRecordHelper() {
+void HashTable::SearchRecord() {
             
             if (IsTableBuilt()) {
                 
                 const std::string stuId = GetStuIdFromUser();
 
-                StudentRecord* record = SearchRecord(stuId);
+                StudentRecord* record = SearchRecordHelper(stuId);
 
                 if (record == nullptr) {
             
@@ -702,7 +714,7 @@ bool HashTable::ArchiveRecord() {
         
             const std::string stuId = GetStuIdFromUser();
 
-            foundMatch = SearchRecord(stuId);
+            foundMatch = SearchRecordHelper(stuId);
 
             if (foundMatch) {
         
@@ -717,7 +729,7 @@ bool HashTable::ArchiveRecord() {
 
     }
 
-std::string HashTable::PrintActiveRecords() const {
+std::string HashTable::GetActiveRecords() const {
     
         std::ostringstream result;
 
@@ -739,7 +751,7 @@ std::string HashTable::PrintActiveRecords() const {
 
     }
 
-std::string HashTable::PrintDeletedRecords() const {
+std::string HashTable::GetDeletedRecords() const {
     
         std::ostringstream result;
 
@@ -747,7 +759,7 @@ std::string HashTable::PrintDeletedRecords() const {
         
             for (int i = 0; i < hashMaxSize; ++i) {
         
-                if (pHashTable[i].IsInitialized() && !pHashTable[i].IsActive()) {
+                if (pHashTable[i].IsNotDefault() && !pHashTable[i].IsActive()) {
             
                     result << pHashTable[i].ToString();
             
@@ -762,7 +774,7 @@ std::string HashTable::PrintDeletedRecords() const {
 
     }
 
-std::string HashTable::PrintUnprocessedRecords() const {
+std::string HashTable::RetrieveUnprocessedRecords() const {
     
         std::ostringstream result;
 
@@ -797,14 +809,20 @@ std::string HashTable::PrintUnprocessedRecords() const {
 void DisplayMenu() {
 
     std::cout << "\nSelect Option"
+        
         "\n1. Create Hash"
+
         "\n2. Search Record by ID"
+
         "\n3. Archive record"
+
         "\n4. Print active records"
+
         "\n5. Print deleted records"
+
         "\n6. Print unprocessed records"
-        "\n7. Quit"
-        "\n\n";
+
+        "\n7. Quit\n\n";
 
 }
 

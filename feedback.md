@@ -1,3 +1,20 @@
+**4/23/2025**
+*  **feedback.md is for instructor use only. DO NOT change the feedback.md**; make a copy if needed
+* class definition style & standards:  first, member vars  none per line and do not forget to initialize them;  second functions: separate group of functions  by a blank line; either matching setter/getter pairs or list all setters back to back and list all getters back to back; start with a default c’tor, followed by  copy c’tor (if any), then other c’tors in the order of increased number of arguments, d’tor- right after c’tor(s), overloaded functions- list them back to back in the order of increased number of arguments;  all accessor/getter functions should be const; all functions with more than one statement should be normal (defined externally, outside of the class and below main()), no inline functions with more than one statement; initialize all member variables to appropriate default values at the time of definition; all member variables must be private; classes must provide a strong exception guarantee; must have default c’tor; implement Rule of Three when necessary
+* member variables should be defined and initialized on separate lines; one per line -2
+* units taken should be int or unsigned short int, not size_t ; size_t is for holding size of objects in memory -1;  
+*  unsigned long long unitsTaken{0}; waste of memory; are you expecting a student to take over a million units in their lifetime at one institution? (unsigned long long int in C++ is from 0 to 18,446,744,073,709,551,615 (264 - 1)); institutions keep student records forever and have thousands and thousands of students  -2
+* data should be displayed in a table format with column headings whenever possible; text entries should be left aligned; and numerical entries should be right aligned with the same number of decimal places -2
+* notDefault{false}  what for?
+* poor Id(s)  and/or inconsistent naming convention; ids should be self-documenting and as short as possible; use verbs for functions and nouns for variables; use camel-casing for variables (errorMessage) enum & const should be in upper case with words separated by “_”, e.g., MAX_TERMS, PRINT_RECORDS; pointer variables should start with p( if single)  or pp( if double pointer); flags isValid ( clearly what true would mean); if copying – e.g rhsQueue or scrQueue ; do not use IDs that are same as or very similar to C++  keywords and functions; no need to call an array “array”- it is obvious -1
+```text
+notDefault{false}
+```
+* #44   do all hashtable objects must be of the same size?
+* inadequate and/ insufficient test data/ not all possible scenarios and edge cases have been tested; e.g., each record has 4 pieces of data; pow(2,4)->16  possible combinations of valid/invalid and only one of them is a valid record; all menu options should be tested;  no zeros, negative numbers, etc -5
+* 305, 306 – what if copy process fails? -5
+
+
 
 **4/8/2025**
 * class definition style & standards:  first, member vars  none per line and do not forget to initialize them;  second functions: separate group of functions  by a blank line; either matching setter/getter pairs or list all setters back to back and list all getters back to back; start with a default c’tor, followed by  copy c’tor (if any), then other c’tors in the order of increased number of arguments, d’tor- right after c’tor(s), overloaded functions- list them back to back in the order of increased number of arguments;  all accessor/getter functions should be const; all functions with more than one statement should be normal (defined externally, outside of the class and below main()), no inline functions with more than one statement; initialize all member variables to appropriate default values at the time of definition; all member variables must be private; classes must provide a strong exception guarantee; must have default c’tor; implement Rule of Three when necessary 
